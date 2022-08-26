@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'components/questions.dart';
 
 void main() => runApp(QuestionApp());
 
@@ -45,10 +45,8 @@ class QuestionAppState extends State<QuestionApp> {
                     children: [
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          questions[whatQuestion],
-                          style: TextStyle(fontSize: 18),
-                        ),
+                        child:
+                            Question(text: questions[whatQuestion], size: 18),
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
