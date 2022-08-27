@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:questions_app/components/btnWithTheAnswer.dart';
 import 'components/questions.dart';
 
 void main() => runApp(QuestionApp());
@@ -48,24 +49,12 @@ class QuestionAppState extends State<QuestionApp> {
                         child:
                             Question(text: questions[whatQuestion], size: 18),
                       ),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.purple[600]),
-                          onPressed: () => handleClick(answer: 'answer 1'),
-                          child: Text('Resposta 1',
-                              style: TextStyle(fontSize: 16))),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.purple[600]),
-                          onPressed: () => handleClick(answer: 'answer 2'),
-                          child: Text('Resposta 2',
-                              style: TextStyle(fontSize: 16))),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.purple[600]),
-                          onPressed: () => handleClick(answer: 'answer 3'),
-                          child: Text('Resposta 3',
-                              style: TextStyle(fontSize: 16)))
+                      BtnWithTheAnswer(
+                          text: 'resposta 1', handleClick: handleClick),
+                      BtnWithTheAnswer(
+                          text: 'resposta 2', handleClick: handleClick),
+                      BtnWithTheAnswer(
+                          text: 'resposta 3', handleClick: handleClick),
                     ],
                   )
           ],
