@@ -6,18 +6,33 @@ void main() => runApp(QuestionApp());
 
 class QuestionAppState extends State<QuestionApp> {
   int whatQuestion = 0;
+
+  final List<Map<String, Object>> _questions = const [
+    {
+      'question': 'Qual sua cor favorita?',
+      'answers': ['Azul', 'Preto']
+    },
+    {
+      'question': 'Qual sua linguagem de programação favorita?',
+      'answers': ['Javascript', 'Dart']
+    }
+  ];
+
+  bool get selectedQuestion {
+    return whatQuestion < _questions.length;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<String> questions = [
-      'Qual sua cor favorita?',
-      'Qual dessas não é uma linguagem de programação?',
-    ];
     void handleClick({required String answer}) {
       print('was clicked on answer $answer');
       setState(() {
         whatQuestion++;
       });
     }
+
+    List<String> allAnswers =
+        selectedQuestion ? _questions[whatQuestion].cast()['answers'] : [];
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -33,7 +48,7 @@ class QuestionAppState extends State<QuestionApp> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            whatQuestion == questions.length
+            !selectedQuestion
                 ? Text(
                     'Finish!! 🎉',
                     style: TextStyle(
@@ -46,15 +61,15 @@ class QuestionAppState extends State<QuestionApp> {
                     children: [
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child:
-                            Question(text: questions[whatQuestion], size: 18),
+                        child: Question(
+                            text:
+                                _questions[whatQuestion]['question'].toString(),
+                            size: 18),
                       ),
-                      BtnWithTheAnswer(
-                          text: 'resposta 1', handleClick: handleClick),
-                      BtnWithTheAnswer(
-                          text: 'resposta 2', handleClick: handleClick),
-                      BtnWithTheAnswer(
-                          text: 'resposta 3', handleClick: handleClick),
+                      ...allAnswers
+                          .map((e) => BtnWithTheAnswer(
+                              handleClick: handleClick, text: e))
+                          .toList()
                     ],
                   )
           ],
