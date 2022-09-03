@@ -8,15 +8,21 @@ void main() => runApp(QuestionApp());
 
 class QuestionAppState extends State<QuestionApp> {
   int whatQuestion = 0;
-
+  double grades = 0;
   final List<Map<String, Object>> _questions = const [
     {
       'question': 'Qual sua cor favorita?',
-      'answers': ['Azul', 'Preto']
+      'answers': [
+        {'text': 'Azul', 'grade': 9.5},
+        {'text': 'Preto', 'grade': 4.5},
+      ]
     },
     {
       'question': 'Qual sua linguagem de programação favorita?',
-      'answers': ['Javascript', 'Dart']
+      'answers': [
+        {'text': 'Javascript', 'grade': 2.0},
+        {'text': 'Dart', 'grade': 5.5}
+      ]
     }
   ];
 
@@ -26,10 +32,17 @@ class QuestionAppState extends State<QuestionApp> {
 
   @override
   Widget build(BuildContext context) {
-    void handleClick({required String answer}) {
-      print('was clicked on answer $answer');
+    void handleClick({required String answer, required double grade}) {
+      grades += grade;
       setState(() {
         whatQuestion++;
+      });
+    }
+
+    void handleResetQuiz() {
+      setState(() {
+        grades = 0;
+        whatQuestion = 0;
       });
     }
 
@@ -48,7 +61,7 @@ class QuestionAppState extends State<QuestionApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             !selectedQuestion
-                ? Result()
+                ? Result(total: grades, resetQuiz: handleResetQuiz)
                 : Quiz(
                     questions: _questions,
                     whatQuestion: whatQuestion,
