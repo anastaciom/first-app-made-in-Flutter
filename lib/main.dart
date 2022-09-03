@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:questions_app/components/btnWithTheAnswer.dart';
+import 'package:questions_app/components/quiz.dart';
+import 'package:questions_app/components/result.dart';
 import 'components/questions.dart';
 
 void main() => runApp(QuestionApp());
@@ -31,9 +33,6 @@ class QuestionAppState extends State<QuestionApp> {
       });
     }
 
-    List<String> allAnswers =
-        selectedQuestion ? _questions[whatQuestion].cast()['answers'] : [];
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
@@ -49,29 +48,12 @@ class QuestionAppState extends State<QuestionApp> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             !selectedQuestion
-                ? Text(
-                    'Finish!! 🎉',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Color.fromARGB(255, 118, 0, 148)),
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Question(
-                            text:
-                                _questions[whatQuestion]['question'].toString(),
-                            size: 18),
-                      ),
-                      ...allAnswers
-                          .map((e) => BtnWithTheAnswer(
-                              handleClick: handleClick, text: e))
-                          .toList()
-                    ],
-                  )
+                ? Result()
+                : Quiz(
+                    questions: _questions,
+                    whatQuestion: whatQuestion,
+                    handleClick: handleClick,
+                    selectedQuestion: selectedQuestion)
           ],
         )),
       ),
